@@ -1,0 +1,20 @@
+[tool.poetry]
+name = "picoblue"
+version = "0.1.0"
+description = ""
+authors = ["bugcity <wakamesukusuki@gmail.com>"]
+readme = "README.md"
+
+[tool.poetry.dependencies]
+python = "^3.11"
+
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
+
+
+[tool.poe.tasks]
+pull = "rshell cp \"/pyboard/*.py ./src\""
+push = "rshell cp \"./src/*.py /pyboard\""
+
