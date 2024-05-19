@@ -26,12 +26,14 @@ This script operates on Raspberry Pi Pico W using MicroPython, fetching temperat
     COUNTRY = 'your country'  # JP, US, etc.
 
     # Meter
-    MACADDR = '00:11:22:33:44:55'  # Replace with your SwitchBot Hub Mini's MAC address
+    METERS = [
+        {'MACADDR': '00:11:22:33:44:55', 'MODEL': 'meter', 'ZABBIX_HOST': 'host name meter'},
+        {'MACADDR': 'aa:bb:cc:dd:ee:ff', 'MODEL': 'outdoor-meter', 'ZABBIX_HOST': 'host name outdoor-meter'},
+    ]
 
     # Zabbix
     ZABBIX_SERVER = 'your.zabbix.server'
     ZABBIX_PORT = 10051
-    ZABBIX_HOST = 'your host name'
 
     # Zabbix item keys
     BATTERY_ITEM_KEY = 'switchbot.meter.battery'
