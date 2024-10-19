@@ -1,7 +1,7 @@
-from bluebot import SwitchBotScanner, SwitchBotTempAndHumidSensorMeter, SwitchBotTempAndHumidSensorOutdoor
+from bluebot import SwitchBotScanner, SwitchBotTempAndHumidSensorMeter, SwitchBotTempAndHumidSensorOutdoor, SwitchBotPlugMini
 from config import COUNTRY, WIFI_SSID, WIFI_PASSWORD, \
     METERS, ZABBIX_SERVER, ZABBIX_PORT, \
-    BATTERY_ITEM_KEY, TEMPERATURE_ITEM_KEY, HUMIDITY_ITEM_KEY
+    BATTERY_ITEM_KEY, TEMPERATURE_ITEM_KEY, HUMIDITY_ITEM_KEY, POWER_ITEM_KEY
 import machine
 import time
 from wifi import WIFI
@@ -11,6 +11,7 @@ from zabbix_client import ZabbixClient
 switchbot_meters = {
     'meter': SwitchBotTempAndHumidSensorMeter,
     'outdoor-meter': SwitchBotTempAndHumidSensorOutdoor,
+    'plug-mini': SwitchBotPlugMini,
 }
 
 
@@ -31,11 +32,16 @@ def main():
     with WIFI(COUNTRY, WIFI_SSID, WIFI_PASSWORD):
         for client in sbs.clients.values():
             if client.has_data:
-                zabbix_data = {
-                    BATTERY_ITEM_KEY: client.battery,
-                    TEMPERATURE_ITEM_KEY: client.temperature,
-                    HUMIDITY_ITEM_KEY: client.humidity,
-                }
+                if client.model == 'plug-mini':
+                    zabbix_data = {
+                        POWER_ITEM_KEY: client.power,
+                    }
+                else:
+                    zabbix_data = {
+                        BATTERY_ITEM_KEY: client.battery,
+                        TEMPERATURE_ITEM_KEY: client.temperature,
+                        HUMIDITY_ITEM_KEY: client.humidity,
+                    }
                 zc = ZabbixClient(ZABBIX_SERVER, ZABBIX_PORT, client.zabbix_host)
                 print(client.zabbix_host, zc.send(zabbix_data))
 

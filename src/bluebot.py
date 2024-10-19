@@ -88,6 +88,10 @@ class SwitchBotSensor:
 
 class SwitchBotTempAndHumidSensor(SwitchBotSensor):
 
+    def __init__(self, macaddr):
+        super().__init__(macaddr)
+        self.model = 'meter'
+
     def clear_data(self):
         super().clear_data()
         self.battery = None
@@ -140,4 +144,27 @@ class SwitchBotTempAndHumidSensorOutdoor(SwitchBotTempAndHumidSensor):
             self.extract_manufacturer_data(data)
             self.scan_finished_manufacturer = True
         if self.scan_finished_service and self.scan_finished_manufacturer:
+            self.scan_done()
+
+
+class SwitchBotPlugMini(SwitchBotSensor):
+
+    def __init__(self, macaddr):
+        super().__init__(macaddr)
+        self.model = 'plug-mini'
+
+    def clear_data(self):
+        super().clear_data()
+        self.overload = None
+        self.power = None
+
+    def extract_manufacturer_data(self, data):
+        self.overload = (data[12] & 0b10000000) >> 7
+        self.power = (((data[12] << 8) + data[13]) & 0x7fff) / 10
+
+    def scaned(self, type, adv_type, data):
+        if self.has_data:
+            return
+        if type == 0xff and adv_type == 0:
+            self.extract_manufacturer_data(data)
             self.scan_done()

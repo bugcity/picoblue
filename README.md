@@ -1,6 +1,6 @@
 # Raspberry Pi Pico W MicroPython SwitchBot Hub Mini Data Sending Script
 
-This script operates on Raspberry Pi Pico W using MicroPython, fetching temperature and humidity data from SwitchBot Hub Mini via Bluetooth, and sending it to Zabbix.
+This script operates on Raspberry Pi Pico W using MicroPython, fetching temperature and humidity data from SwitchBot Hub Mini and power from Plug-Mini via Bluetooth, and sending them to Zabbix.
 
 ## Prerequisites
 
@@ -29,6 +29,7 @@ This script operates on Raspberry Pi Pico W using MicroPython, fetching temperat
     METERS = [
         {'MACADDR': '00:11:22:33:44:55', 'MODEL': 'meter', 'ZABBIX_HOST': 'host name meter'},
         {'MACADDR': 'aa:bb:cc:dd:ee:ff', 'MODEL': 'outdoor-meter', 'ZABBIX_HOST': 'host name outdoor-meter'},
+        {'MACADDR': 'dd:bb:cc:dd:ee:ff', 'MODEL': 'plug-mini', 'ZABBIX_HOST': 'host name plug-mini'},
     ]
 
     # Zabbix
@@ -39,7 +40,7 @@ This script operates on Raspberry Pi Pico W using MicroPython, fetching temperat
     BATTERY_ITEM_KEY = 'switchbot.meter.battery'
     TEMPERATURE_ITEM_KEY = 'switchbot.meter.temperature'
     HUMIDITY_ITEM_KEY = 'switchbot.meter.humidity'
-    ```
+    POWER_ITEM_KEY = 'switchbot.plug.power'```
 
     Adjust the values for each item according to the information for your SwitchBot Hub Mini and Zabbix server.
 
