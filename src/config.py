@@ -1,3 +1,6 @@
+# Description: Configuration file for SwitchBot Meter and Plug Mini
+INTERVAL = 1
+
 # 2.4GHz Wi-fi only
 WIFI_SSID = 'your wifi SSID'
 WIFI_PASSWORD = 'your wifi password'
@@ -19,3 +22,5 @@ BATTERY_ITEM_KEY = 'switchbot.meter.battery'
 TEMPERATURE_ITEM_KEY = 'switchbot.meter.temperature'
 HUMIDITY_ITEM_KEY = 'switchbot.meter.humidity'
 POWER_ITEM_KEY = 'switchbot.plug.power'
+
+ZABBIX_HOST = 'pico1'
